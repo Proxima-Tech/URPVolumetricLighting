@@ -105,7 +105,7 @@ namespace Voxell.VolumetricLighting
                 _radialBlurMaterial.SetFloat("_NoiseScale", _settings.noiseScale);
                 _radialBlurMaterial.SetFloat("_NoiseStrength", _settings.noiseStrength);
 
-                Blit(cmd, _occluderTarget, scriptableRenderer.cameraColorTargetHandle, _radialBlurMaterial);
+                Blit(cmd, _occluderTarget, scriptableRenderer.cameraColorTarget, _radialBlurMaterial);
             }
         }
 
