@@ -12,7 +12,8 @@ namespace Voxell.VolumetricLighting
     private Material _occluderMaterial;
     private Material _radialBlurMaterial;
 
-    private RTHandle _cameraColorTarget;
+    // private RTHandle _cameraColorTarget;
+    private ScriptableRenderer scriptableRenderer;
     private RTHandle _occluderTarget;
 
     private VolumetricLightScattering.Settings _settings;
@@ -41,9 +42,9 @@ namespace Voxell.VolumetricLighting
       );
     }
 
-    public void SetTarget(RTHandle colorHandle)
+    public void SetTarget(ScriptableRenderer r)
     {
-      this._cameraColorTarget = colorHandle;
+      this.scriptableRenderer = r;
     }
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -54,7 +55,7 @@ namespace Voxell.VolumetricLighting
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
-      if (this._occluderMaterial == null || this._radialBlurMaterial == null) return; 
+      if (this._occluderMaterial == null || this._radialBlurMaterial == null) return;
       if (RenderSettings.sun ==  null || !RenderSettings.sun.enabled) return;
 
       CommandBuffer cmd = CommandBufferPool.Get();
@@ -101,7 +102,7 @@ namespace Voxell.VolumetricLighting
         _radialBlurMaterial.SetFloat("_NoiseScale", _settings.noiseScale);
         _radialBlurMaterial.SetFloat("_NoiseStrength", _settings.noiseStrength);
 
-        Blit(cmd, _occluderTarget, _cameraColorTarget, _radialBlurMaterial);
+        Blit(cmd, _occluderTarget, scriptableRenderer.cameraColorTargetHandle, _radialBlurMaterial);
       }
     }
 
