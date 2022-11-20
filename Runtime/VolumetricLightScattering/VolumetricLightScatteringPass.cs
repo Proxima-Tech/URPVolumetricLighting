@@ -89,7 +89,7 @@ namespace Voxell.VolumetricLighting
                 float dotProd = Vector3.Dot(-cameraDirectionWorldSpace, sunDirectionWorldSpace);
                 dotProd -= Vector3.Dot(cameraDirectionWorldSpace, Vector3.down);
                 float intensityFader = dotProd / _settings.fadeRange;
-                intensityFader = Mathf.Clamp(intensityFader, 0.0f, 1.0f);
+                intensityFader = Mathf.Clamp(intensityFader, _settings.minIntensity, _settings.maxIntensity);
 
                 Color sunColor = RenderSettings.sun.color;
                 if (RenderSettings.sun.useColorTemperature)
